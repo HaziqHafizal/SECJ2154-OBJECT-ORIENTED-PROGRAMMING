@@ -1,69 +1,46 @@
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-public class LogManager 
-{
-    private User user;
+public class LogManager {
+    private ArrayList<User> users;
+    private User currentUser;
 
-    public LogManager(User user) 
-    {
-        this.user = user;
+    public LogManager() {
+        users = new ArrayList<>();
     }
 
-   public void start() {
-    Scanner scanner = new Scanner(System.in);
+    public void addUser(String name) {
+        users.add(new User(name));
+    }
 
-    while (true) {
-	System.out.println("-----------------------");
-	System.out.println("Welcome to StudyBuddy");
-	System.out.println("-----------------------");
-        System.out.println("[1] Log Study Session");
-        System.out.println("[2] Log Break Session");
-        System.out.println("[3] Show Summary");
-        System.out.println("[4] Exit");
-        System.out.print("Enter choice: ");
-        String choice = scanner.nextLine();
-
-        if (choice.equals("4")) 
-        {
-            System.out.println("Thank you, byebye !");
-            break;
-        } 
-        else if (choice.equals("3")) {
-            user.showSummary(); 
-        }
-        else if (choice.equals("1") || choice.equals("2")) {
-            try {
-                System.out.print("\nEnter description(name of task): ");
-                String desc = scanner.nextLine();
-                System.out.print("Enter start time (example 10:27): ");
-                String start = scanner.nextLine();
-                System.out.print("Enter end time (example 10:27): ");
-                String end = scanner.nextLine();
-
-                Task task;
-                if (choice.equals("1")) {
-                    task = new StudySession(desc, start, end);
-                } else {
-                    task = new BreakSession(desc, start, end);
-                }
-
-                long duration = task.getDuration(); // trigger validation
-                user.addTask(task);
-                System.out.println("Task added successfully.");
-                System.out.println();
-
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid time format. Use HH:mm format.");
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
+    public boolean switchUser(String name) {
+        for (User user : users) {
+            if (user.getName().equalsIgnoreCase(name)) {
+                currentUser = user;
+                return true;
             }
-        } 
-        else {
-            System.out.println("Invalid choice. Try again.");
         }
+        return false;
     }
 
-    scanner.close();
-}
+    public User getCurrentUser() {
+        return currentUser;
+    }
 
+    public List<Task> getTasksByDate(LocalDate date) {
+        List<Task> result = new ArrayList<>();
+        if (currentUser != null) {
+            for (Task task : currentUser.getTasks()) {
+                if (task.getDate().equals(date)) {
+                    result.add(task);
+                }
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
 }

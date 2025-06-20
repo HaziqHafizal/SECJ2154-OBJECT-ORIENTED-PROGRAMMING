@@ -1,12 +1,11 @@
-public class BreakSession extends Task 
-{
-    public BreakSession(String description, String startTime, String endTime) 
-    {
-        super(description, startTime, endTime);
+import java.time.LocalDate;
+
+public class BreakSession extends Task {
+    public BreakSession(int duration, LocalDate date) {
+        super(duration, date);
     }
 
-    public String getType() 
-    {
-        return "Break";
+    public String getTaskType() {
+        return "Break Session";
     }
 }

@@ -1,6 +1,4 @@
-public interface TimeTrackable 
-{
-    long getDuration(); // duration in minutes
-    String getStartTime();
-    String getEndTime();
+public interface TimeTrackable {
+    int getDuration();
+    String getTaskType();
 }

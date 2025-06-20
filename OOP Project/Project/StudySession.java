@@ -1,12 +1,12 @@
-public class StudySession extends Task 
-{
-    public StudySession(String description, String startTime, String endTime) 
-    {
-        super(description, startTime, endTime);
+
+import java.time.LocalDate;
+
+public class StudySession extends Task {
+    public StudySession(int duration, LocalDate date) {
+        super(duration, date);
     }
 
-    public String getType() 
-    {
-        return "Study";
+    public String getTaskType() {
+        return "Study Session";
     }
 }
